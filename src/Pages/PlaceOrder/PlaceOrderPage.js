@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Card, FloatingLabel, Form, Modal, Spinner } from "react-bootstrap";
+import { Button, Card, Form, Modal, Spinner } from "react-bootstrap";
 import { useParams } from "react-router";
-import Service from "../../Components/Service/Service";
 import useAuth from "../../Hooks/useAuth";
 import useServiceDetail from "../../Hooks/useServiceDetail";
 import "./PlaceOrderPage.css";
@@ -19,12 +18,12 @@ const PlaceOrderPage = () => {
 
   const [dAddress, setdAddress] = useState("");
 
-  
   const handleDeliveryAddress = (e) => {
     console.log(e.target.value);
     setdAddress(e.target.value);
   };
 
+  // Placer order
   const placeOrder = () => {
     const order = {
       name: user.displayName,
@@ -33,16 +32,17 @@ const PlaceOrderPage = () => {
       service: service,
       order_status: 0,
     };
-    
-    axios.post(`${process.env.REACT_APP_BASE_URL}/orders/add`, order)
-            .then(res => {
-                if (res.data.insertedId) {
-                  handleShow();
-                }
-            })
-   
+
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/orders/add`, order)
+      .then((res) => {
+        if (res.data.insertedId) {
+          handleShow();
+        }
+      });
   };
 
+  // render html
   return (
     <div>
       {service.title === "loading" ? (
@@ -51,22 +51,23 @@ const PlaceOrderPage = () => {
             <Spinner animation="grow" variant="waring" />
           </div>
         </div>
-      ) : (<Card className="m-5" style={{ width: "50%" }}>
-      <Card.Img
-        variant="top"
-        src={service.image}
-        width="1000px"
-        height="200px"
-      />
-      <Card.Body>
-        <Card.Title>{service.title}</Card.Title>
-        <Card.Text> {service.subtitle}</Card.Text>
-        <Card.Text> {service.cost}</Card.Text>
-        <Card.Text> {service.delivery_time}</Card.Text>
-      </Card.Body>
-    </Card>)}
+      ) : (
+        <Card className="m-5" style={{ width: "50%" }}>
+          <Card.Img
+            variant="top"
+            src={service.image}
+            width="1000px"
+            height="200px"
+          />
+          <Card.Body>
+            <Card.Title>{service.title}</Card.Title>
+            <Card.Text> {service.subtitle}</Card.Text>
+            <Card.Text> {service.cost}</Card.Text>
+            <Card.Text> {service.delivery_time}</Card.Text>
+          </Card.Body>
+        </Card>
+      )}
 
-      
       <Form className="dc-form">
         <Form.Group className="mb-3">
           <Form.Label>Name</Form.Label>
@@ -101,9 +102,7 @@ const PlaceOrderPage = () => {
         <Modal.Header closeButton>
           <Modal.Title>Submitted</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {user.displayName}, order placed successfully.
-        </Modal.Body>
+        <Modal.Body>{user.displayName}, order placed successfully.</Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleClose}>
             Thank you !

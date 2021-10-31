@@ -39,6 +39,7 @@ const AddServicePage = () => {
     setTime(e.target.value);
   };
 
+  // Add Service
   const addService = () => {
     const service = {
       title: name,
@@ -57,6 +58,7 @@ const AddServicePage = () => {
       });
   };
 
+  // render html
   return (
     <div>
       <Form className="dc-form">

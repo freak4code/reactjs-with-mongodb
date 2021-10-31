@@ -5,8 +5,13 @@ import useAuth from "../../Hooks/useAuth";
 import useOrder from "../../Hooks/useOrder";
 
 const AllOrdersPage = () => {
+  // Uodate Order status by force fake state update
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+
   const [orders, setOrders] = useOrder(null);
 
+  // Delete Order by id
   const handleDeleteOrder = (id) => {
     const proceed = window.confirm(
       "Are you sure, you want to delete this order ?"
@@ -26,6 +31,7 @@ const AllOrdersPage = () => {
     }
   };
 
+  // Approve Order Status
   const handleUpdateOrderStatus = (id, order) => {
     let newOrder = order;
     newOrder.order_status = 1;
@@ -45,11 +51,13 @@ const AllOrdersPage = () => {
           console.log("Update", data);
           if (data.modifiedCount > 0) {
             alert("Approved Successful");
+            forceUpdate();
           }
         });
     }
   };
 
+  // render html
   return (
     <div>
       <h3 className="text-center font-black service-title text-success mt-3">

@@ -15,14 +15,16 @@ const Services = () => {
       </h3>
       <div className="service-container">
         {services.length === 0 ? (
-        <div className="spinner-arena">
-          <div className="spinnner-position">
-            <Spinner animation="grow" variant="waring" />
+          <div className="spinner-arena">
+            <div className="spinnner-position">
+              <Spinner animation="grow" variant="waring" />
+            </div>
           </div>
-        </div>
-      ) : services.map((service) => (
-          <Service key={service._id} service={service}></Service>
-        ))}
+        ) : (
+          services.map((service) => (
+            <Service key={service._id} service={service}></Service>
+          ))
+        )}
       </div>
     </div>
   );
