@@ -1,0 +1,13 @@
+/* About Page Styling */
+
+.about-container {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+  padding: 30px;
+}
+
+.text-color {
+    color: black;
+    margin-bottom: 5px;
+}
